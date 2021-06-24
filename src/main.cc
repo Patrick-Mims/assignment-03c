@@ -7,15 +7,26 @@ using namespace std;
 
 int main(void)
 {
-    ifstream inFile;
-    string data;
+    introduction();
+    //    loadData();
+    int i = 0;
 
-    inFile.open("../Data.CS.SFSU.txt");
+    string word;
 
-    inFile >> data;
-    cout << "Should be some data here again: " << data << endl;
+    do
+    {
+        cout << "Search [ " << i << " ]: ";
+        cin >> word;
 
-    inFile.close();
+        if (word == "!help")
+        {
+            helpMenu();
+        }
+
+        cout << "=> " << word << endl;
+
+        i += 1;
+    } while (i < 2);
 
     return 0;
 }
