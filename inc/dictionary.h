@@ -49,7 +49,10 @@ void loadData()
 {
     vector<string> vec;
 
+    char copy[256];
+    string definition;
     string grammar;
+    string separator;
     string inDataFile = "Data.CS.SFSU.txt";
     string outDataFile = "grammar.txt";
 
@@ -60,7 +63,14 @@ void loadData()
     while (getline(in, grammar, '|'))
     {
         in >> grammar;
+        cout << grammar << separator << definition << endl;
         out << grammar << endl;
+        /*
+        while (getline(in >> definition, definition, '|'))
+        {
+            cout << "++++" << definition << endl;
+        }
+        */
     }
 
     out.close();
