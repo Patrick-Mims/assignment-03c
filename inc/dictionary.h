@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -46,56 +47,41 @@ string parseFile(ifstream &file)
 
 void loadData()
 {
-    cout << "Opening data file: Data.CS.SFSU.txt";
+    vector<string> vec;
+    cout << "Opening data file: Data.CS.SFSU.txt" << endl;
 
-    string data = "Data.CS.SFSU.txt";
-    string lineOne, lineTwo, lineThree;
+    string filename = "temp.txt";
+    string inDataFile = "Data.CS.SFSU.txt";
 
-    /*
-    cout << endl;
+    string lineOne;
 
-    in >> lineOne;
-    while (in >> lineOne)
-    {
-        cout << lineOne << endl;
-    }
-    cout << endl;
-    */
-
-    ifstream in(data.c_str());
+    ifstream in(inDataFile.c_str());
 
     while (in >> lineOne)
     {
-      string words = parseFile(in);
-
-      if (in.eof())
-        break;
-
-      cout << words << endl;
+        string parsedData = parseFile(in);
+        vec.push_back(parsedData);
+        cout << parsedData << endl;
     }
-
-    /*
-    cout << endl;
-    in >> lineOne;
-    while (in >> lineOne >> lineTwo >> lineThree)
-    {
-        if (!in.eof())delimfiledelimfile
-        {delimfile
-            cout << "      " << lineOne << endl;
-        }
-    }
-    cout << endl;
-    */
-
-    /*
-    while (getline(in, line))
-    {
-        cout << line << endl;
-        cout << endl;
-    }
-    */
 
     in.close();
+
+    if (vec.empty() == false)
+    {
+        cout << vec.size() << endl;
+    }
+    else
+    {
+        cout << "Vector is empty." << endl;
+    }
+
+    vector<string>::iterator v = vec.begin();
+
+    while (v != vec.end())
+    {
+        cout << "value of v = " << *v << endl;
+        v++;
+    }
 }
 
 #endif

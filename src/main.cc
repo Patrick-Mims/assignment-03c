@@ -1,6 +1,3 @@
-#include <fstream>
-#include <iostream>
-#include <string>
 #include "dictionary.h"
 
 using namespace std;
@@ -8,7 +5,9 @@ using namespace std;
 int main(void)
 {
     introduction();
-    //    loadData();
+
+    loadData();
+
     int i = 0;
 
     string word;
