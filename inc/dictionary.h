@@ -48,6 +48,30 @@ string parseFile(ifstream &file)
 void loadData()
 {
     vector<string> vec;
+
+    string grammar;
+    string inDataFile = "Data.CS.SFSU.txt";
+    string outDataFile = "grammar.txt";
+
+    ifstream in(inDataFile.c_str());
+
+    ofstream out(outDataFile.c_str());
+
+    while (getline(in, grammar, '|'))
+    {
+        in >> grammar;
+        out << grammar << endl;
+    }
+
+    out.close();
+
+    in.close();
+}
+
+/*
+void loadData()
+{
+    vector<string> vec;
     cout << "Opening data file: Data.CS.SFSU.txt" << endl;
 
     string filename = "temp.txt";
@@ -83,5 +107,6 @@ void loadData()
         v++;
     }
 }
+*/
 
 #endif
