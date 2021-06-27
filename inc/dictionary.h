@@ -51,6 +51,7 @@ void loadData()
     vector<string> gram;
 
     char copy[256];
+
     string definition;
     string grammar;
     string separator;
