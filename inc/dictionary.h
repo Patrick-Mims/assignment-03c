@@ -48,6 +48,7 @@ string parseFile(ifstream &file)
 void loadData()
 {
     vector<string> vec;
+    vector<string> gram;
 
     char copy[256];
     string definition;
@@ -55,27 +56,36 @@ void loadData()
     string separator;
     string inDataFile = "Data.CS.SFSU.txt";
     string outDataFile = "grammar.txt";
+    string lineOne;
+    string lineTwo;
+
+    ifstream in_gram(inDataFile.c_str());
+    ofstream out_gram(outDataFile.c_str());
+
+    while (getline(in_gram, grammar, '|'))
+    {
+        in_gram >> grammar >> separator;
+        cout << grammar << separator << definition << endl;
+        gram.push_back(grammar);
+        out_gram << grammar << endl;
+    }
+
+    out_gram.close();
+    in_gram.close();
 
     ifstream in(inDataFile.c_str());
 
-    ofstream out(outDataFile.c_str());
-
-    while (getline(in, grammar, '|'))
+    while (in >> lineOne >> lineTwo)
     {
-        in >> grammar;
-        cout << grammar << separator << definition << endl;
-        out << grammar << endl;
-        /*
-        while (getline(in >> definition, definition, '|'))
-        {
-            cout << "++++" << definition << endl;
-        }
-        */
+        string parsedData = parseFile(in);
+        vec.push_back(parsedData);
+        cout << parsedData << endl;
     }
 
-    out.close();
-
     in.close();
+
+    cout << "vec: size: " << vec.size() << endl;
+    cout << "gram: size: " << gram.size() << endl;
 }
 
 /*
