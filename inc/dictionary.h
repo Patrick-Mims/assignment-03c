@@ -7,21 +7,6 @@
 
 using namespace std;
 
-void loadData()
-{
-    cout << "Opening data file: Data.CS.SFSU.txt";
-
-    string line;
-
-    ifstream in("Data.CS.SFSU.txt");
-
-    while (getline(in, line))
-    {
-        cout << line << endl;
-        cout << endl;
-    }
-}
-
 void helpMenu()
 {
     cout << "\t**********" << endl;
@@ -47,6 +32,70 @@ void introduction()
     cout << "Definitions: [DEFINITION_SIZE]" << endl;
     cout << endl;
     helpMenu();
+}
+
+string parseFile(ifstream &file)
+{
+    const int INDEX = 1024;
+    char buf[INDEX];
+
+    file.getline(&(buf[0]), INDEX, '|');
+
+    return string(buf);
+}
+
+void loadData()
+{
+    cout << "Opening data file: Data.CS.SFSU.txt";
+
+    string data = "Data.CS.SFSU.txt";
+    string lineOne, lineTwo, lineThree;
+
+    /*
+    cout << endl;
+
+    in >> lineOne;
+    while (in >> lineOne)
+    {
+        cout << lineOne << endl;
+    }
+    cout << endl;
+    */
+
+    ifstream in(data.c_str());
+
+    while (in >> lineOne)
+    {
+      string words = parseFile(in);
+
+      if (in.eof())
+        break;
+
+      cout << words << endl;
+    }
+
+    /*
+    cout << endl;
+    in >> lineOne;
+    while (in >> lineOne >> lineTwo >> lineThree)
+    {
+        if (!in.eof())delimfiledelimfile
+        {delimfile
+            cout << "      " << lineOne << endl;
+        }
+    }
+    cout << endl;
+    */
+
+    /*
+    while (getline(in, line))
+    {
+        cout << line << endl;
+        cout << endl;
+    }
+    */
+
+    in.close();
 }
 
 #endif
