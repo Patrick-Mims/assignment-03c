@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#define DATA_FILE "Data.CS.SFSU.txt"
+
 using namespace std;
 
 void helpMenu()
@@ -21,7 +23,7 @@ void helpMenu()
     cout << "\t\tSearch [0]: book " << endl;
     cout << "\t\tSearch [1]: book noun" << endl;
     cout << "\t\tSearch [2]: book noun reverse" << endl;
-    cout << "\t\tSearch [2]: book noun reverse" << endl;
+    cout << "\t\tSearch [3]: book noun distinct" << endl;
     cout << endl;
 }
 
@@ -48,7 +50,7 @@ string parseFile(ifstream &file)
 void loadData()
 {
     vector<string> vec;
-    vector<string> gram;
+    vector<string> vGrammar;
 
     char copy[256];
 
@@ -60,16 +62,24 @@ void loadData()
     string lineOne;
     string lineTwo;
 
+    cout << "! Opening Data File..." << DATA_FILE << endl;
+    cout << "! Loading Data..." << endl;
+
     ifstream in_gram(inDataFile.c_str());
     ofstream out_gram(outDataFile.c_str());
+
+    cout << "! Loading Completed..." << endl;
 
     while (getline(in_gram, grammar, '|'))
     {
         in_gram >> grammar >> separator;
-        cout << grammar << separator << definition << endl;
-        gram.push_back(grammar);
-        out_gram << grammar << endl;
+        cout << "Grammar: " << grammar << endl;
+        //cout << grammar << separator << definition << endl;
+        /* this populates vGrammar */
+        vGrammar.push_back(grammar);
     }
+
+    cout << "! Closing Data File..." << endl;
 
     out_gram.close();
     in_gram.close();
@@ -80,13 +90,13 @@ void loadData()
     {
         string parsedData = parseFile(in);
         vec.push_back(parsedData);
-        cout << parsedData << endl;
+        //cout << parsedData << endl;
     }
 
     in.close();
 
     cout << "vec: size: " << vec.size() << endl;
-    cout << "gram: size: " << gram.size() << endl;
+    cout << "gram: size: " << vGrammar.size() << endl;
 }
 
 /*
