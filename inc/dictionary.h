@@ -10,6 +10,14 @@
 
 using namespace std;
 
+void vector_search_grammar(vector<string> &g)
+{
+    for (vector<string>::iterator t = g.begin(); t != g.end(); ++t)
+    {
+        cout << "Searching Grammar Vector => " << *t << endl;
+    }
+}
+
 void helpMenu()
 {
     cout << "\t**********" << endl;
@@ -73,9 +81,7 @@ void loadData()
     while (getline(in_gram, grammar, '|'))
     {
         in_gram >> grammar >> separator;
-        cout << "Grammar: " << grammar << endl;
-        //cout << grammar << separator << definition << endl;
-        /* this populates vGrammar */
+        //cout << "Grammar: " << grammar << endl;
         vGrammar.push_back(grammar);
     }
 
@@ -97,6 +103,8 @@ void loadData()
 
     cout << "vec: size: " << vec.size() << endl;
     cout << "gram: size: " << vGrammar.size() << endl;
+
+    vector_search_grammar(vGrammar);
 }
 
 /*
