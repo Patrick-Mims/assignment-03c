@@ -65,111 +65,48 @@ string parseFile(ifstream &file)
 
 void loadData()
 {
-    vector<string> vec;
     vector<string> vGrammar;
     vector<string> vDefinition;
 
-    char copy[256];
-
     string definition;
-    string defSet;
     string grammar;
-    string separator;
     string inDataFile = "Data.CS.SFSU.txt";
-    string outDataFile = "grammar.txt";
-    string lineOne;
-    string lineTwo;
 
     cout << "! Opening Data File..." << DATA_FILE << endl;
     cout << "! Loading Data..." << endl;
 
-    ifstream in_gram(inDataFile.c_str());
-    if (in_gram.fail())
+    ifstream inGrammar(inDataFile.c_str());
+
+    if (inGrammar.fail())
     {
         cout << "Couldn't open the file!" << endl;
     }
 
     cout << "! Loading Completed..." << endl;
 
-    string item;
+    while (getline(inGrammar, grammar, '|'))
+    {
+        inGrammar >> grammar;
+        vGrammar.push_back(grammar);
+    }
+
+    inGrammar.close();
+
+    /************************************************/
+
+    ifstream inDefinition(inDataFile.c_str());
+
+    while (getline(inDefinition, definition, '|'))
+    {
+        vDefinition.push_back(definition);
+    }
+
+    inDefinition.close();
 
     cout << "! Closing Data File..." << endl;
 
-    in_gram.close();
-
-    ifstream in(inDataFile.c_str());
-
-    char str[255];
-
-    string tp;
-    while (getline(in, tp, '|'))
-    {
-        vDefinition.push_back(tp);
-    }
-
-    /*
-    while (in >> lineOne >> lineTwo)
-    {
-        cout << "this is lineTwo: " << lineTwo << endl;
-        string parsedData = parseFile(in);
-        vec.push_back(parsedData);
-        //cout << parsedData << endl;
-    }
-    */
-
-    in.close();
-
-    cout << "vec: size: " << vec.size() << endl;
-    cout << "gram: size: " << vGrammar.size() << endl;
-
-    //vector_search_definitions(vDefinition);
-
-    //vector_search_grammar(vGrammar);
+    cout << "vector Definition size: " << vDefinition.size() << endl;
+    cout << "vector Grammar size: " << vGrammar.size() << endl;
 }
-
-/*
-void loadDefinitions()
-{
-}
-
-void loadData()
-{
-    vector<string> vec;
-    cout << "Opening data file: Data.CS.SFSU.txt" << endl;
-
-    string filename = "temp.txt";
-    string inDataFile = "Data.CS.SFSU.txt";
-
-    string lineOne;
-
-    ifstream in(inDataFile.c_str());
-
-    while (in >> lineOne)
-    {
-        string parsedData = parseFile(in);
-        vec.push_back(parsedData);
-        cout << parsedData << endl;
-    }
-
-    in.close();
-
-    if (vec.empty() == false)
-    {
-        cout << vec.size() << endl;
-    }
-    else
-    {
-        cout << "Vector is empty." << endl;
-    }
-
-    vector<string>::iterator v = vec.begin();
-
-    while (v != vec.end())
-    {
-        cout << "value of v = " << *v << endl;
-        v++;
-    }
-}
-*/
 
 #endif
