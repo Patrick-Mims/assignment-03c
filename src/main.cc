@@ -30,7 +30,7 @@ void definitionSearch(vector<string> &d)
 {
     for (vector<string>::iterator it = d.begin(); it != d.end(); ++it)
     {
-        cout << "Definition search: " << *it << endl;
+        cout << *it << endl;
     }
 }
 
@@ -86,36 +86,26 @@ void load()
     cout << "! Loading Completed..." << endl;
     cout << "! Closing Data File..." << endl;
 
-    string line1, line2, line3, line4, line5, line6;
+    string line1;
 
     while (getline(file, token, '|'))
     {
         file >> line1;
-        //cout << token << endl;
         speech.push_back(line1);
         definition.push_back(token);
     }
 
     file.close();
 
-    /*
-    fstream nfile(DATA_FILE, ios::in);
-
-    while (getline(nfile, t, '\n'))
-    {
-        nfile >> line2;
-        nfile >> line3;
-        nfile >> line4;
-        nfile >> line5;
-        nfile >> line6;
-        cout << line5 << line6;
-        //cout << t << endl;
-    }
-    file.close();
-    */
     speechSearch(speech);
     definitionSearch(definition);
 }
+
+/*
+    you have to read in book|noun into another file , then read it back in 
+    and use | as a delimeter. The store the token in the vector
+
+*/
 
 int main(void)
 {
