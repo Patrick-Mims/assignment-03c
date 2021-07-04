@@ -8,6 +8,9 @@
 
 using namespace std;
 
+/* declared vectors globally */
+vector<string> definition, keyword, speech;
+
 void keywordSearch(vector<string> &w)
 {
     for (vector<string>::iterator it = w.begin(); it != w.end(); it++)
@@ -53,8 +56,8 @@ void intro()
 {
     cout << endl;
     cout << "Dictionary 340 C++" << endl;
-    cout << "Keywords: [KEYWORD_SIZE]" << endl;
-    cout << "Definitions: [DEFINITION_SIZE]" << endl;
+    cout << "Keywords: " << keyword.size() << endl;
+    cout << "Definitions: " << definition.size() << endl;
     cout << endl;
     help();
 }
@@ -64,9 +67,7 @@ void load()
     int i = 0;
     string re_open, temp1, temp2, token, txtData[20];
 
-    vector<string> definition, keyword, speech;
-
-    cout << "! Opening Temp Data File [" << DATA_FILE << "]" << endl;
+    cout << "! Opening Data File [" << DATA_FILE << "]" << endl;
     cout << "! Loading Data..." << endl;
 
     /* Open stream to get definitions */
@@ -79,6 +80,8 @@ void load()
     }
 
     /* Here I open another stream to output both the keyword and grammar */
+    cout << "! Opening [TEMP] Data File for Writing"
+         << " [" << DATA_FILE_TEMP << "] " << endl;
     fstream ofile(DATA_FILE_TEMP, ios::out);
 
     /* Set the definition vector */
@@ -90,12 +93,16 @@ void load()
     }
 
     /* close both connections */
+    cout << "! Closing [Temp] Data File for Writing"
+         << " [" << DATA_FILE_TEMP << "] " << endl;
     ofile.close();
 
+    cout << "! Closing Data File"
+         << " [" << DATA_FILE << "] " << endl;
     file.close();
 
     /* Opening another file for reading */
-    cout << "! Opening Temp Data File [" << DATA_FILE_TEMP << "]" << endl;
+    cout << "! Opening Temp Data File for Reading [" << DATA_FILE_TEMP << "]" << endl;
     cout << "! Loading Temp Data..." << endl;
 
     fstream reopen_file(DATA_FILE_TEMP, ios::in);
@@ -117,7 +124,8 @@ void load()
 
     reopen_file.close();
 
-    cout << "! Closing Temp Data File..." << endl;
+    cout << "! Closing Temp Data File for Reading..."
+         << " [" << DATA_FILE_TEMP << "] " << endl;
 
     /* This is here to show the contents of the vectors 
         definitionSearch(definition);
