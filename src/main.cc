@@ -65,7 +65,6 @@ void load()
 {
     int i = 0;
     string re_open;
-    string line1;
     string temp1;
     string temp2;
     string token;
@@ -75,6 +74,7 @@ void load()
     vector<string> speech;
     vector<string> definition;
 
+    /* Open stream to get definitions */
     cout << "! Opening Data File..." << DATA_FILE << endl;
     cout << "! Loading Data..." << endl;
 
@@ -91,10 +91,8 @@ void load()
 
     while (getline(file, token, '\n'))
     {
-        file >> line1;
-        cout << line1 << endl;
-        ofile << line1 << endl;
-        //speech.push_back(line1);
+        file >> temp1;
+        ofile << temp1 << endl;
         definition.push_back(token);
     }
 
@@ -107,12 +105,18 @@ void load()
 
     fstream reopen_file(DATA_FILE_TEMP, ios::in);
 
+    if (!reopen_file)
+    {
+        cerr << "File could not be opened!" << endl;
+        exit(1);
+    }
+
     while (getline(reopen_file, re_open, '|'))
     {
         re_open.erase(remove(re_open.begin(), re_open.end(), '\n'), re_open.end());
-        reopen_file >> temp1;
+        reopen_file >> temp2;
         keyword.push_back(re_open);
-        speech.push_back(temp1);
+        speech.push_back(temp2);
     }
 
     reopen_file.close();
@@ -120,20 +124,14 @@ void load()
     cout << "! Loading Completed..." << endl;
     cout << "! Closing Data File..." << endl;
 
-    //cout << "Definition Size: " << definition.size() << endl;
-    //cout << "Keyword Size: " << keyword.size() << endl;
-    cout << "Speech Size: " << speech.size() << endl;
-
     definitionSearch(definition);
     keywordSearch(keyword);
     speechSearch(speech);
+
+    cout << "Definition Size: " << definition.size() << endl;
+    cout << "Keyword Size: " << keyword.size() << endl;
+    cout << "Speech Size: " << speech.size() << endl;
 }
-
-/*
-    you have to read in book|noun into another file , then read it back in 
-    and use | as a delimeter. The store the token in the vector
-
-*/
 
 int main(void)
 {
