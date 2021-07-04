@@ -14,7 +14,7 @@ void keywordSearch(vector<string> &w)
 {
     for (vector<string>::iterator it = w.begin(); it != w.end(); ++it)
     {
-        cout << "Keyword search: " << *it << endl;
+        cout << "Keyword => " << *it << endl;
     }
 }
 
@@ -22,7 +22,7 @@ void speechSearch(vector<string> &s)
 {
     for (vector<string>::iterator it = s.begin(); it != s.end(); ++it)
     {
-        cout << "Speech search: " << *it << endl;
+        cout << "Speech => " << *it << endl;
     }
 }
 
@@ -30,7 +30,7 @@ void definitionSearch(vector<string> &d)
 {
     for (vector<string>::iterator it = d.begin(); it != d.end(); ++it)
     {
-        cout << *it << endl;
+        cout << "Definition => " << *it << endl;
     }
 }
 
@@ -88,17 +88,29 @@ void load()
 
     string line1;
 
-    while (getline(file, token, '|'))
+    fstream ofile(DATA_FILE_TEMP, ios::out);
+
+    while (getline(file, token, '\n'))
     {
         file >> line1;
+        cout << line1 << endl;
+        ofile << line1 << endl;
+        /*
         speech.push_back(line1);
         definition.push_back(token);
+        */
     }
 
+    ofile.close();
     file.close();
 
+    cout << "Definition Size: " << definition.size() << endl;
+    cout << "Speech Size: " << speech.size() << endl;
+
+    /*
     speechSearch(speech);
     definitionSearch(definition);
+    */
 }
 
 /*
