@@ -1,77 +1,124 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <cstdlib>
 #include <string>
 #include <vector>
+#include <regex>
 
 #include "dictionary.h"
 
 using namespace std;
 
+void keywordSearch(vector<string> &w)
+{
+    for (vector<string>::iterator it = w.begin(); it != w.end(); ++it)
+    {
+        cout << "Keyword search: " << *it << endl;
+    }
+}
+
+void speechSearch(vector<string> &s)
+{
+    for (vector<string>::iterator it = s.begin(); it != s.end(); ++it)
+    {
+        cout << "Speech search: " << *it << endl;
+    }
+}
+
+void definitionSearch(vector<string> &d)
+{
+    for (vector<string>::iterator it = d.begin(); it != d.end(); ++it)
+    {
+        cout << "Definition search: " << *it << endl;
+    }
+}
+
+void help()
+{
+    cout << "**********" << endl;
+    cout << "PARAMETER HOW-TO: " << endl;
+    cout << "1. A Search Key" << endl;
+    cout << "2. An optional 'grammar' word i.e Noun, Verb..." << endl;
+    cout << "3. An optional 'distinct' keyword" << endl;
+    cout << "4. An optional 'reverse' keyword" << endl;
+    cout << "**********" << endl;
+    cout << "Example: " << endl;
+    cout << "\tSearch [0]: book " << endl;
+    cout << "\tSearch [1]: book noun" << endl;
+    cout << "\tSearch [2]: book noun reverse" << endl;
+    cout << "\tSearch [3]: book noun distinct" << endl;
+    cout << endl;
+}
+
+void intro()
+{
+    cout << endl;
+    cout << "Dictionary 340 C++" << endl;
+    cout << "Keywords: [KEYWORD_SIZE]" << endl;
+    cout << "Definitions: [DEFINITION_SIZE]" << endl;
+    cout << endl;
+    help();
+}
+
 void load()
 {
+    int i = 0;
+    string token;
+    string t;
+    string txtData[20];
+
+    vector<string> keyword;
+    vector<string> speech;
+    vector<string> definition;
+
     cout << "! Opening Data File..." << DATA_FILE << endl;
     cout << "! Loading Data..." << endl;
 
-    fstream inFile(DATA_FILE);
-    cout << "! Loading Completed..." << endl;
-    cout << "! Closing Data File..." << endl;
-    inFile.close();
+    fstream file(DATA_FILE, ios::in);
 
-    /*
-    ioFile >> col1;
-    ioFile >> col2;
-    ioFile >> col3;
-
-    cout << col1 << "  " << col2 << " " << col3 << " " << endl;
-    */
-
-    /*
-    while (ioFile >> col1 >> col2 >> col3)
+    if (!file)
     {
-        cout << col1 << " " << col2 << " " << col3 << " " << endl;
-    }
-    */
-
-    /*
-    ifstream inGrammar(inDataFile.c_str());
-    if (inGrammar.fail())
-    {
-        cout << "Couldn't open the file!" << endl;
+        cerr << "File could not be opened!" << endl;
+        exit(1);
     }
 
     cout << "! Loading Completed..." << endl;
-
-    while (getline(inGrammar, grammar, '|'))
-    {
-        inGrammar >> grammar;
-        vGrammar.push_back(grammar);
-    }
-
-    inGrammar.close();
-
-    ifstream inDefinition(inDataFile.c_str());
-
-    while (getline(inDefinition, definition, '|'))
-    {
-        vDefinition.push_back(definition);
-    }
-
-    inDefinition.close();
-
     cout << "! Closing Data File..." << endl;
 
-    cout << "vector Definition size: " << vDefinition.size() << endl;
-    cout << "vector Grammar size: " << vGrammar.size() << endl;
+    string line1, line2, line3, line4, line5, line6;
 
-    vector_search_definitions(vDefinition);
+    while (getline(file, token, '|'))
+    {
+        file >> line1;
+        //cout << token << endl;
+        speech.push_back(line1);
+        definition.push_back(token);
+    }
+
+    file.close();
+
+    /*
+    fstream nfile(DATA_FILE, ios::in);
+
+    while (getline(nfile, t, '\n'))
+    {
+        nfile >> line2;
+        nfile >> line3;
+        nfile >> line4;
+        nfile >> line5;
+        nfile >> line6;
+        cout << line5 << line6;
+        //cout << t << endl;
+    }
+    file.close();
     */
+    speechSearch(speech);
+    definitionSearch(definition);
 }
 
 int main(void)
 {
-    load();
-    /*
     load();
     intro();
 
@@ -85,19 +132,18 @@ int main(void)
         cout << "Search [ " << count << " ]: ";
 
         cin >> word;
-        //getline(cin, word);
 
         if (word == "!help")
         {
-            helpMenu();
+            help();
         }
 
         w.push_back(word);
 
-        word_search(w);
+        keywordSearch(w);
 
         count += 1;
     } while (count < 2);
-    */
+
     return 0;
 }
