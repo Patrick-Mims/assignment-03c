@@ -64,8 +64,10 @@ void intro()
 void load()
 {
     int i = 0;
+    string re_open;
+    string temp1;
+    string temp2;
     string token;
-    string t;
     string txtData[20];
 
     vector<string> keyword;
@@ -104,13 +106,38 @@ void load()
     ofile.close();
     file.close();
 
+    cout << "! Opening Data File..." << DATA_FILE << endl;
+    cout << "! Loading Data..." << endl;
+
+    fstream reopen_file(DATA_FILE_TEMP, ios::in);
+
+    while (getline(reopen_file, re_open, '|'))
+    {
+        reopen_file >> temp1;
+        reopen_file >> temp2;
+
+        cout << "**" << endl;
+        re_open.erase(remove(re_open.begin(), re_open.end(), '\n'), re_open.end());
+        //cout << "re_open |" << re_open << "| " << endl;
+        keyword.push_back(re_open);
+        /*
+        cout << "ro1 => (" << temp1 << ") " << endl;
+        cout << "ro2 => [" << temp2 << "] " << endl;
+        cout << "**" << endl;
+        */
+    }
+
+    reopen_file.close();
+
+    cout << "! Loading Completed..." << endl;
+    cout << "! Closing Data File..." << endl;
+
     cout << "Definition Size: " << definition.size() << endl;
     cout << "Speech Size: " << speech.size() << endl;
 
-    /*
-    speechSearch(speech);
     definitionSearch(definition);
-    */
+    keywordSearch(keyword);
+    speechSearch(speech);
 }
 
 /*
