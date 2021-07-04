@@ -65,6 +65,7 @@ void load()
 {
     int i = 0;
     string re_open;
+    string line1;
     string temp1;
     string temp2;
     string token;
@@ -85,11 +86,7 @@ void load()
         exit(1);
     }
 
-    cout << "! Loading Completed..." << endl;
-    cout << "! Closing Data File..." << endl;
-
-    string line1;
-
+    /* Here I open another stream to output both the keyword and grammar */
     fstream ofile(DATA_FILE_TEMP, ios::out);
 
     while (getline(file, token, '\n'))
@@ -97,13 +94,12 @@ void load()
         file >> line1;
         cout << line1 << endl;
         ofile << line1 << endl;
-        /*
-        speech.push_back(line1);
+        //speech.push_back(line1);
         definition.push_back(token);
-        */
     }
 
     ofile.close();
+
     file.close();
 
     cout << "! Opening Data File..." << DATA_FILE << endl;
@@ -113,18 +109,10 @@ void load()
 
     while (getline(reopen_file, re_open, '|'))
     {
-        reopen_file >> temp1;
-        reopen_file >> temp2;
-
-        cout << "**" << endl;
         re_open.erase(remove(re_open.begin(), re_open.end(), '\n'), re_open.end());
-        //cout << "re_open |" << re_open << "| " << endl;
+        reopen_file >> temp1;
         keyword.push_back(re_open);
-        /*
-        cout << "ro1 => (" << temp1 << ") " << endl;
-        cout << "ro2 => [" << temp2 << "] " << endl;
-        cout << "**" << endl;
-        */
+        speech.push_back(temp1);
     }
 
     reopen_file.close();
@@ -132,7 +120,8 @@ void load()
     cout << "! Loading Completed..." << endl;
     cout << "! Closing Data File..." << endl;
 
-    cout << "Definition Size: " << definition.size() << endl;
+    //cout << "Definition Size: " << definition.size() << endl;
+    //cout << "Keyword Size: " << keyword.size() << endl;
     cout << "Speech Size: " << speech.size() << endl;
 
     definitionSearch(definition);
