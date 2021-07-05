@@ -57,6 +57,7 @@ void intro()
     cout << endl;
     cout << "Dictionary 340 C++" << endl;
     cout << "Keywords: " << keyword.size() << endl;
+    cout << "Speech: " << speech.size() << endl;
     cout << "Definitions: " << definition.size() << endl;
     cout << endl;
     help();
