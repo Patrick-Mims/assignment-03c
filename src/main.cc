@@ -164,7 +164,7 @@ int main(void)
         keywordSearch(vWord);
 
         count += 1;
-    } while (count < 2);
+    } while (count < LOOP);
 
     return 0;
 }
