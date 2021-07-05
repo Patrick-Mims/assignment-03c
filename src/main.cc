@@ -13,9 +13,10 @@ vector<string> definition, keyword, speech;
 
 void keywordSearch(vector<string> &k)
 {
+    cout << "\t";
     for (vector<string>::iterator it = k.begin(); it != k.end(); it++)
     {
-        cout << "Keyword => " << *it << endl;
+        cout << *it << ", ";
     }
 }
 
@@ -54,7 +55,8 @@ void wordSearch(vector<string> &w, int cnt)
     }
     else
     {
-        cout << "That word isn't part of the dictionary!" << endl;
+        cout << "That word isn't part of the dictionary!\n"
+             << endl;
     }
 }
 
@@ -72,6 +74,11 @@ void help()
     cout << "\tSearch [1]: book noun" << endl;
     cout << "\tSearch [2]: book noun reverse" << endl;
     cout << "\tSearch [3]: book noun distinct" << endl;
+    cout << "\tThese following words are currently in the dictionary: \n"
+         << endl;
+
+    keywordSearch(keyword);
+
     cout << endl;
 }
 
@@ -90,7 +97,7 @@ void intro()
 void load()
 {
     int i = 0;
-    string re_open, temp1, temp2, temp3, token, txtData[20];
+    string re_open, temp1, temp2, temp3, temp4, temp5, token, txtData[20];
 
     cout << "! Opening Data File [" << DATA_FILE << "]" << endl;
     cout << "! Loading Data..." << endl;
