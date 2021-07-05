@@ -11,9 +11,9 @@ using namespace std;
 /* declared vectors globally */
 vector<string> definition, keyword, speech;
 
-void keywordSearch(vector<string> &w)
+void keywordSearch(vector<string> &k)
 {
-    for (vector<string>::iterator it = w.begin(); it != w.end(); it++)
+    for (vector<string>::iterator it = k.begin(); it != k.end(); it++)
     {
         cout << "Keyword => " << *it << endl;
     }
@@ -32,6 +32,21 @@ void definitionSearch(vector<string> &d)
     for (vector<string>::iterator it = d.begin(); it != d.end(); it++)
     {
         cout << "Definition => " << *it << endl;
+    }
+}
+
+/* search keyword for a matching word */
+void wordSearch(vector<string> &w, int cnt)
+{
+    cout << "** " << w.at(cnt) << endl;
+
+    vector<string>::iterator it;
+
+    it = find(keyword.begin(), keyword.end(), w.at(cnt));
+
+    if (it != keyword.end())
+    {
+        cout << "Element Found: " << *it << " found at " << it - keyword.begin() << endl;
     }
 }
 
@@ -63,6 +78,7 @@ void intro()
     help();
 }
 
+/* This function parses the file and populates the vectors */
 void load()
 {
     int i = 0;
@@ -74,13 +90,14 @@ void load()
     /* Open stream to get definitions */
     fstream file(DATA_FILE, ios::in);
 
+    /* Check for errors */
     if (!file)
     {
         cerr << "File could not be opened!" << endl;
         exit(1);
     }
 
-    /* Here I open another stream to output both the keyword and grammar */
+    /* Open another stream to output both the keyword and grammar */
     cout << "! Opening [TEMP] Data File for Writing"
          << " [" << DATA_FILE_TEMP << "] " << endl;
     fstream ofile(DATA_FILE_TEMP, ios::out);
@@ -93,7 +110,7 @@ void load()
         definition.push_back(token);
     }
 
-    /* close both connections */
+    /* Close both connections */
     cout << "! Closing [Temp] Data File for Writing"
          << " [" << DATA_FILE_TEMP << "] " << endl;
     ofile.close();
@@ -102,13 +119,13 @@ void load()
          << " [" << DATA_FILE << "] " << endl;
     file.close();
 
-    /* Opening another file for reading */
+    /* Open another file for reading */
     cout << "! Opening Temp Data File for Reading [" << DATA_FILE_TEMP << "]" << endl;
     cout << "! Loading Temp Data..." << endl;
 
     fstream reopen_file(DATA_FILE_TEMP, ios::in);
 
-    /* check if the file was opened successfully */
+    /* Check for errors */
     if (!reopen_file)
     {
         cerr << "Temp File could not be opened!" << endl;
@@ -161,7 +178,7 @@ int main(void)
 
         vWord.push_back(word);
 
-        keywordSearch(vWord);
+        wordSearch(vWord, count);
 
         count += 1;
     } while (count < LOOP);
