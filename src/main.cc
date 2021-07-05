@@ -31,14 +31,15 @@ void definitionSearch(vector<string> &d)
 {
     for (vector<string>::iterator it = d.begin(); it != d.end(); it++)
     {
-        cout << "Definition => " << *it << endl;
+        cout << *it << endl;
     }
 }
 
 /* search keyword for a matching word */
 void wordSearch(vector<string> &w, int cnt)
 {
-    cout << "** " << w.at(cnt) << endl;
+    int location = 0;
+    cout << w.at(cnt) << " [" << speech.at(cnt) << "] : " << endl;
 
     vector<string>::iterator it;
 
@@ -46,7 +47,14 @@ void wordSearch(vector<string> &w, int cnt)
 
     if (it != keyword.end())
     {
-        cout << "Element Found: " << *it << " found at " << it - keyword.begin() << endl;
+        location = (it - keyword.begin());
+        cout << "|" << endl;
+        cout << definition.at(location + 1) << endl;
+        cout << "|" << endl;
+    }
+    else
+    {
+        cout << "That word isn't part of the dictionary!" << endl;
     }
 }
 
@@ -82,7 +90,7 @@ void intro()
 void load()
 {
     int i = 0;
-    string re_open, temp1, temp2, token, txtData[20];
+    string re_open, temp1, temp2, temp3, token, txtData[20];
 
     cout << "! Opening Data File [" << DATA_FILE << "]" << endl;
     cout << "! Loading Data..." << endl;
@@ -134,6 +142,7 @@ void load()
 
     while (getline(reopen_file, re_open, '|'))
     {
+        //cout << "re_open: " << re_open << endl;
         re_open.erase(remove(re_open.begin(), re_open.end(), '\n'), re_open.end());
         reopen_file >> temp2;
         keyword.push_back(re_open);
