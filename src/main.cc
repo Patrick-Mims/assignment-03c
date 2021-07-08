@@ -1,9 +1,7 @@
-#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
-#include <vector>
 
 #include "dictionary.h"
 #define FILE "Data.CS.SFSU.txt"
@@ -13,7 +11,12 @@ using namespace std;
 map<string, map<string, string>> mm;
 map<string, string>::iterator ptr;
 
-void mapSearch(map<string, map<string, string>> m)
+void map_search(string s)
+{
+    cout << "Map Search..." << s << endl;
+}
+
+void mapOut(map<string, map<string, string>> m)
 {
     map<string, map<string, string>>::iterator it;
     map<string, string>::iterator ptr;
@@ -33,8 +36,9 @@ void load()
 
     fstream file(FILE, ios::in);
 
-    cout << "! Opening Data File [" << DATA_FILE << "]" << endl;
-    cout << "! Loading Data..." << endl;
+    cout << "! Opening Data File [" << DATA_FILE << "]"
+         << "\n"
+         << "! Loading Data..." << endl;
 
     if (file.is_open())
     {
@@ -49,32 +53,22 @@ void load()
         }
     }
 
-    cout << "! Loading completed..." << endl;
-    cout << "! Closing Data File..."
-         << " [" << DATA_FILE_TEMP << "] " << endl;
+    cout << "! Loading completed..."
+         << "\n"
+         << "! Closing Data File..."
+         << " [" << DATA_FILE << "] " << endl;
 
     file.close();
-
-    mapSearch(mm);
+    //    mapOut(mm);
 }
 
 void help()
 {
-    cout << "**********" << endl;
     cout << "PARAMETER HOW-TO: " << endl;
     cout << "1. A Search Key" << endl;
     cout << "2. An optional 'grammar' word i.e Noun, Verb..." << endl;
     cout << "3. An optional 'distinct' keyword" << endl;
     cout << "4. An optional 'reverse' keyword" << endl;
-    cout << "**********" << endl;
-    cout << "Example: " << endl;
-    cout << "\tSearch [0]: book " << endl;
-    cout << "\tSearch [1]: book noun" << endl;
-    cout << "\tSearch [2]: book noun reverse" << endl;
-    cout << "\tSearch [3]: book noun distinct" << endl;
-    cout << "\tThese following words are currently in the dictionary: \n"
-         << endl;
-
     cout << endl;
 }
 
@@ -90,32 +84,25 @@ void intro()
 
 int main(void)
 {
+    int i = 0;
+    string term;
+
     load();
     intro();
 
-    int count = 0;
-
-    string word;
-    vector<string> vWord;
-
     do
     {
-        cout << "Search [ " << count << " ]: ";
+        cout << "Search [ " << i << " ]: ";
 
-        cin >> word;
+        cin >> term;
 
-        if (word == "!help")
-        {
+        if (term == "!help")
             help();
-        }
 
-        /* push the word onto the word vector */
-        vWord.push_back(word);
+        map_search(term);
 
-        //        wordSearch(vWord, count);
-
-        count += 1;
-    } while (count < LOOP);
+        i += 1;
+    } while (i < LOOP);
 
     return 0;
 }
