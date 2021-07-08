@@ -3,7 +3,6 @@
 #include <map>
 #include <string>
 
-#include "dictionary.h"
 #define FILE "Data.CS.SFSU.txt"
 
 using namespace std;
@@ -104,7 +103,7 @@ int main(void)
         map_search(term);
 
         i += 1;
-    } while (i < LOOP);
+    } while (i < mm.size());
 
     return 0;
 }
