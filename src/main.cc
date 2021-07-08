@@ -8,6 +8,8 @@
 
 using namespace std;
 
+int cnt = 0;
+
 map<string, map<string, string>> mm;
 map<string, string>::iterator ptr;
 
@@ -30,7 +32,7 @@ void mapOut(map<string, map<string, string>> m)
     }
 }
 
-void load()
+void parse()
 {
     string d, k, s;
 
@@ -44,6 +46,7 @@ void load()
     {
         while (getline(file, d, '.'))
         {
+            cnt += 1;
             getline(file, k, '|');
 
             file >> s;
@@ -72,12 +75,12 @@ void help()
     cout << endl;
 }
 
-void intro()
+void introduction()
 {
     cout << endl;
     cout << "====== Dictionary 340 C++ ======" << endl;
-    cout << "------ Keywords: " << endl;
-    cout << "------ Definitions: " << endl;
+    cout << "------ Keywords: " << mm.size() << endl;
+    cout << "------ Definitions: " << cnt << endl;
     cout << endl;
     help();
 }
@@ -87,8 +90,8 @@ int main(void)
     int i = 0;
     string term;
 
-    load();
-    intro();
+    parse();
+    introduction();
 
     do
     {
