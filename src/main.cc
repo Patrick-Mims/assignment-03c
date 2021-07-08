@@ -8,10 +8,30 @@
 
 using namespace std;
 
-int cnt = 0;
+int counter = 0;
 
 map<string, map<string, string>> mm;
 map<string, string>::iterator ptr;
+
+void help(void)
+{
+    cout << "PARAMETER HOW-TO: " << endl;
+    cout << "1. A Search Key" << endl;
+    cout << "2. An optional 'grammar' word i.e Noun, Verb..." << endl;
+    cout << "3. An optional 'distinct' keyword" << endl;
+    cout << "4. An optional 'reverse' keyword" << endl;
+    cout << endl;
+}
+
+void introduction(void)
+{
+    cout << endl;
+    cout << "====== Dictionary 340 C++ ======" << endl;
+    cout << "------ Keywords: " << mm.size() << endl;
+    cout << "------ Definitions: " << counter << endl;
+    cout << endl;
+    help();
+}
 
 void map_search(string s)
 {
@@ -32,13 +52,13 @@ void mapOut(map<string, map<string, string>> m)
     }
 }
 
-void parse()
+void parse(void)
 {
     string d, k, s;
 
     fstream file(FILE, ios::in);
 
-    cout << "! Opening Data File [" << DATA_FILE << "]"
+    cout << "! Opening Data File [" << FILE << "]"
          << "\n"
          << "! Loading Data..." << endl;
 
@@ -46,7 +66,7 @@ void parse()
     {
         while (getline(file, d, '.'))
         {
-            cnt += 1;
+            counter += 1;
             getline(file, k, '|');
 
             file >> s;
@@ -56,33 +76,13 @@ void parse()
         }
     }
 
-    cout << "! Loading completed..."
+    cout << "! Loading Completed..."
          << "\n"
-         << "! Closing Data File..."
-         << " [" << DATA_FILE << "] " << endl;
+         << "! Closing Data File..." << endl;
 
     file.close();
     //    mapOut(mm);
-}
-
-void help()
-{
-    cout << "PARAMETER HOW-TO: " << endl;
-    cout << "1. A Search Key" << endl;
-    cout << "2. An optional 'grammar' word i.e Noun, Verb..." << endl;
-    cout << "3. An optional 'distinct' keyword" << endl;
-    cout << "4. An optional 'reverse' keyword" << endl;
-    cout << endl;
-}
-
-void introduction()
-{
-    cout << endl;
-    cout << "====== Dictionary 340 C++ ======" << endl;
-    cout << "------ Keywords: " << mm.size() << endl;
-    cout << "------ Definitions: " << cnt << endl;
-    cout << endl;
-    help();
+    introduction();
 }
 
 int main(void)
@@ -91,7 +91,6 @@ int main(void)
     string term;
 
     parse();
-    introduction();
 
     do
     {
@@ -99,7 +98,7 @@ int main(void)
 
         cin >> term;
 
-        if (term == "!help")
+        if (term.compare("!help") == 0)
             help();
 
         map_search(term);
