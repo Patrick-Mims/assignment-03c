@@ -1,63 +1,61 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 
 #include "dictionary.h"
+#define FILE "Data.CS.SFSU.txt"
 
 using namespace std;
 
-/* declared vectors globally */
-vector<string> definition, keyword, speech;
+map<string, map<string, string>> mm;
+map<string, string>::iterator ptr;
 
-void keywordSearch(vector<string> &k)
+void mapSearch(map<string, map<string, string>> m)
 {
-    cout << "\t";
-    for (vector<string>::iterator it = k.begin(); it != k.end(); it++)
+    map<string, map<string, string>>::iterator it;
+    map<string, string>::iterator ptr;
+
+    for (it = m.begin(); it != m.end(); it++)
     {
-        cout << *it << ", ";
+        for (ptr = it->second.begin(); ptr != it->second.end(); ptr++)
+        {
+            cout << it->first << " -> " << ptr->first << " \n-> " << ptr->second << endl;
+        }
     }
 }
 
-void speechSearch(vector<string> &s)
+void load()
 {
-    for (vector<string>::iterator it = s.begin(); it != s.end(); it++)
+    string d, k, s;
+
+    fstream file(FILE, ios::in);
+
+    cout << "! Opening Data File [" << DATA_FILE << "]" << endl;
+    cout << "! Loading Data..." << endl;
+
+    if (file.is_open())
     {
-        cout << "Speech => " << *it << endl;
+        while (getline(file, d, '.'))
+        {
+            getline(file, k, '|');
+
+            file >> s;
+
+            mm.insert(make_pair(k, map<string, string>()));
+            mm[k].insert(make_pair(s, d));
+        }
     }
-}
 
-void definitionSearch(vector<string> &d)
-{
-    for (vector<string>::iterator it = d.begin(); it != d.end(); it++)
-    {
-        cout << *it << endl;
-    }
-}
+    cout << "! Loading completed..." << endl;
+    cout << "! Closing Data File..."
+         << " [" << DATA_FILE_TEMP << "] " << endl;
 
-/* search keyword for a matching word */
-void wordSearch(vector<string> &w, int cnt)
-{
-    int location = 0;
-    cout << w.at(cnt) << " [" << speech.at(cnt) << "] : " << endl;
+    file.close();
 
-    vector<string>::iterator it;
-
-    it = find(keyword.begin(), keyword.end(), w.at(cnt));
-
-    if (it != keyword.end())
-    {
-        location = (it - keyword.begin());
-        cout << "|" << endl;
-        cout << definition.at(location + 1) << endl;
-        cout << "|" << endl;
-    }
-    else
-    {
-        cout << "That word isn't part of the dictionary!\n"
-             << endl;
-    }
+    mapSearch(mm);
 }
 
 void help()
@@ -77,98 +75,17 @@ void help()
     cout << "\tThese following words are currently in the dictionary: \n"
          << endl;
 
-    keywordSearch(keyword);
-
     cout << endl;
 }
 
 void intro()
 {
     cout << endl;
-    cout << "Dictionary 340 C++" << endl;
-    cout << "Keywords: " << keyword.size() << endl;
-    cout << "Speech: " << speech.size() << endl;
-    cout << "Definitions: " << definition.size() << endl;
+    cout << "====== Dictionary 340 C++ ======" << endl;
+    cout << "------ Keywords: " << endl;
+    cout << "------ Definitions: " << endl;
     cout << endl;
     help();
-}
-
-/* This function parses the file and populates the vectors */
-void load()
-{
-    int i = 0;
-    string re_open, temp1, temp2, temp3, temp4, temp5, token, txtData[20];
-
-    cout << "! Opening Data File [" << DATA_FILE << "]" << endl;
-    cout << "! Loading Data..." << endl;
-
-    /* Open stream to get definitions */
-    fstream file(DATA_FILE, ios::in);
-
-    /* Check for errors */
-    if (!file)
-    {
-        cerr << "File could not be opened!" << endl;
-        exit(1);
-    }
-
-    /* Open another stream to output both the keyword and grammar */
-    cout << "! Opening [TEMP] Data File for Writing"
-         << " [" << DATA_FILE_TEMP << "] " << endl;
-    fstream ofile(DATA_FILE_TEMP, ios::out);
-
-    /* Set the definition vector */
-    while (getline(file, token, '\n'))
-    {
-        file >> temp1;
-        ofile << temp1 << endl;
-        definition.push_back(token);
-    }
-
-    /* Close both connections */
-    cout << "! Closing [Temp] Data File for Writing"
-         << " [" << DATA_FILE_TEMP << "] " << endl;
-    ofile.close();
-
-    cout << "! Closing Data File"
-         << " [" << DATA_FILE << "] " << endl;
-    file.close();
-
-    /* Open another file for reading */
-    cout << "! Opening Temp Data File for Reading [" << DATA_FILE_TEMP << "]" << endl;
-    cout << "! Loading Temp Data..." << endl;
-
-    fstream reopen_file(DATA_FILE_TEMP, ios::in);
-
-    /* Check for errors */
-    if (!reopen_file)
-    {
-        cerr << "Temp File could not be opened!" << endl;
-        exit(EXIT_FAILURE);
-    }
-
-    while (getline(reopen_file, re_open, '|'))
-    {
-        //cout << "re_open: " << re_open << endl;
-        re_open.erase(remove(re_open.begin(), re_open.end(), '\n'), re_open.end());
-        reopen_file >> temp2;
-        keyword.push_back(re_open);
-        speech.push_back(temp2);
-    }
-
-    reopen_file.close();
-
-    cout << "! Closing Temp Data File for Reading..."
-         << " [" << DATA_FILE_TEMP << "] " << endl;
-
-    /* This is here to show the contents of the vectors 
-        definitionSearch(definition);
-        keywordSearch(keyword);
-        speechSearch(speech);
-
-        cout << "Definition Size: " << definition.size() << endl;
-        cout << "Keyword Size: " << keyword.size() << endl;
-        cout << "Speech Size: " << speech.size() << endl; */
 }
 
 int main(void)
@@ -192,9 +109,10 @@ int main(void)
             help();
         }
 
+        /* push the word onto the word vector */
         vWord.push_back(word);
 
-        wordSearch(vWord, count);
+        //        wordSearch(vWord, count);
 
         count += 1;
     } while (count < LOOP);
