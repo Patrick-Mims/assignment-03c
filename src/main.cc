@@ -32,12 +32,12 @@ void introduction(void)
     help();
 }
 
-void map_search(string s)
+void search_dictionary(string s)
 {
     cout << "Map Search..." << s << endl;
 }
 
-void mapOut(map<string, map<string, string>> m)
+void display_dictionary(map<string, map<string, string>> m)
 {
     map<string, map<string, string>>::iterator it;
     map<string, string>::iterator ptr;
@@ -100,7 +100,7 @@ int main(void)
         if (term.compare("!help") == 0)
             help();
 
-        map_search(term);
+        search_dictionary(term);
 
         i += 1;
     } while (i < mm.size());
